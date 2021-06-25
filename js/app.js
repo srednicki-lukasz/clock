@@ -1,17 +1,20 @@
 class Clock {
-    formatted = false;
+    isFormatted = false;
 
     constructor() {}
 
     getCurrentTime() {
-        return new Date()
-            .toLocaleTimeString('en-IT', {
-                hour12: this.formatted
-            });
+        const currentTime = new Date().toLocaleTimeString('en-IT', { hour12: this.isFormatted });
+
+        if (this.isFormatted && currentTime.charAt(0) < 10) {
+            return `0${currentTime}`;
+        }
+
+        return currentTime;
     }
 
     toggleFormatting() {
-        this.formatted = !this.formatted;
+        this.isFormatted = !this.isFormatted;
     }
 }
 
