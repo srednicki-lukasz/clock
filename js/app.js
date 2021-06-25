@@ -1,23 +1,29 @@
 class Clock {
+    formatted = false;
+
     constructor() {}
 
     getCurrentTime() {
-        const date = new Date();
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
+        return new Date()
+            .toLocaleTimeString('en-IT', {
+                hour12: this.formatted
+            });
+    }
 
-        if (hours < 10) hours = `0${hours}`
-        if (minutes < 10) minutes = `0${minutes}`
-        if (seconds < 10) seconds = `0${seconds}`
-
-        return `${hours}:${minutes}:${seconds}`;
+    toggleFormatting() {
+        this.formatted = !this.formatted;
     }
 }
 
 const clock = new Clock();
 
 const div_clock = document.querySelector('.clock');
+const btn_format = document.querySelector('.format');
 
 div_clock.innerHTML = clock.getCurrentTime();
 setInterval(() => div_clock.innerHTML = clock.getCurrentTime(), 1000);
+
+btn_format.addEventListener('click', () => {
+    clock.toggleFormatting();
+    div_clock.innerHTML = clock.getCurrentTime();
+});
